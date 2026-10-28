@@ -42,12 +42,12 @@ export function dayMinutes(day: DayLog): number {
 
 export function formatDuration(minutes: number): string {
   const safe = Math.max(0, Math.round(minutes));
-  if (safe === 0) return "0h";
+  if (safe === 0) return "0 hr";
   const hours = Math.floor(safe / 60);
   const rest = safe % 60;
-  if (hours === 0) return `${rest}m`;
-  if (rest === 0) return `${hours}h`;
-  return `${hours}h ${rest}m`;
+  if (hours === 0) return `${rest} min`;
+  if (rest === 0) return `${hours} hr`;
+  return `${hours} hr ${rest} min`;
 }
 
 export function formatClock(value: string): string {
