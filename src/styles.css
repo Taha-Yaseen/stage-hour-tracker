@@ -98,6 +98,7 @@ h2 {
 .done-total {
   margin: 0;
   font-size: 3.4rem;
+  font-variant-numeric: lining-nums tabular-nums;
   line-height: 1;
 }
 
