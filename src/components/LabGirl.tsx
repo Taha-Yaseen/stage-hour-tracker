@@ -1,40 +1,81 @@
 export function LabGirl() {
   return (
-    <svg className="lab-girl" viewBox="0 0 80 124" aria-hidden="true">
-      <ellipse cx="40" cy="118" rx="18" ry="4" fill="#e7d8c8" />
-      <ellipse cx="31" cy="114" rx="7" ry="3.4" fill="#3d3532" />
-      <ellipse cx="49" cy="114" rx="7" ry="3.4" fill="#3d3532" />
+    <svg className="lab-girl" viewBox="0 0 120 176" aria-hidden="true">
+      <ellipse cx="60" cy="170" rx="22" ry="3.4" fill="#e7d8c8" />
+
       <path
-        d="M25 62c-7 10-11 30-8 50h46c3-20-1-40-8-50-5 8-14 12-15 12s-10-4-15-12z"
+        d="M40 102c-10 12-14 36-12 62h64c2-26-2-50-12-62-8 12-18 16-20 16s-12-4-20-16z"
         fill="#fffdfb"
         stroke="#e4d9cc"
-        strokeWidth="1.2"
+        strokeWidth="1.5"
       />
-      <path d="M40 68v40" stroke="#eadfce" strokeWidth="1.5" strokeLinecap="round" />
-      <path d="M29 86h11v9H29z" fill="#fff" stroke="#eadfce" />
-      <rect x="47" y="80" width="9" height="12" rx="1.6" fill="#6eae90" />
-      <path d="M20 50c-1 12 2 24 8 30 2-10 5-18 7-24-5-2-10-4-15-6z" fill="#b85c73" />
-      <path d="M60 50c1 12-2 24-8 30-2-10-5-18-7-24 5-2 10-4 15-6z" fill="#b85c73" />
-      <path d="M30 48c2 10 5 16 10 20 5-4 8-10 10-20-4 3-8 4-10 4s-6-1-10-4z" fill="#9d4d61" />
+      <path d="M60 116v42" stroke="#eadfce" strokeWidth="1.7" strokeLinecap="round" />
+      <path d="M46 136h14v11H46z" fill="#fff" stroke="#eadfce" strokeWidth="1.2" />
+      <rect x="70" y="130" width="10" height="14" rx="1.8" fill="#6eae90" />
+      <ellipse cx="48" cy="164" rx="8" ry="3.3" fill="#3d3532" />
+      <ellipse cx="72" cy="164" rx="8" ry="3.3" fill="#3d3532" />
+
       <path
-        d="M22 40c2-18 34-20 38-2 1 8-4 16-10 19-3-9-7-13-12-13s-9 4-12 13c-6-3-10-11-4-17z"
+        d="M60 8
+           C88 8 98 34 94 58
+           C104 74 112 112 100 158
+           L82 152
+           C90 118 86 86 74 70
+           C72 78 66 84 60 86
+           C54 84 48 78 46 70
+           C34 86 30 118 38 152
+           L20 158
+           C8 112 16 74 26 58
+           C22 34 32 8 60 8Z"
         fill="#c56b7d"
       />
-      <ellipse cx="40" cy="44" rx="12" ry="13.2" fill="#f3c7b4" />
-      <path d="M28 38c4-9 20-10 24 0-3 5-7 7-12 7s-9-2-12-7z" fill="#c56b7d" />
-      <circle cx="35" cy="45" r="1.35" fill="#2a2420" />
-      <circle cx="45" cy="45" r="1.35" fill="#2a2420" />
       <path
-        d="M34.5 51.5c2.2 2.8 8.6 2.8 11 0"
+        d="M34 118c4 16 10 30 18 38"
         fill="none"
-        stroke="#a15a55"
-        strokeWidth="1.3"
+        stroke="#9d4d61"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        opacity="0.35"
+      />
+      <path
+        d="M86 118c-4 16-10 30-18 38"
+        fill="none"
+        stroke="#9d4d61"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        opacity="0.35"
+      />
+
+      <ellipse cx="60" cy="52" rx="18" ry="20" fill="#f3c7b4" />
+      <path d="M40 44c5-16 35-18 40 0-6 7-13 9-20 9s-14-2-20-9z" fill="#c56b7d" />
+      <path d="M42 46c2 14 3 24 7 32-2-12-2-22-1-32-2-1-4-1-6 0z" fill="#c56b7d" />
+      <path d="M78 46c-2 14-3 24-7 32 2-12 2-22 1-32 2-1 4-1 6 0z" fill="#c56b7d" />
+      <path
+        d="M44 68c3 10 8 16 16 17 8-1 13-7 16-17-5 7-10 10-16 10s-11-3-16-10z"
+        fill="#c56b7d"
+      />
+      <path
+        d="M48 74c3 4 21 4 24 0"
+        fill="none"
+        stroke="#9d4d61"
+        strokeWidth="1.6"
         strokeLinecap="round"
       />
-      <g transform="translate(56 74)">
-        <rect width="16" height="20" rx="2" fill="#f7f1e6" stroke="#d9cbb8" />
-        <rect x="4" y="-2" width="8" height="4" rx="1" fill="#d9cbb8" />
-        <path d="M3 8h10M3 12h10M3 16h7" stroke="#c56b7d" strokeWidth="1.1" strokeLinecap="round" />
+
+      <circle cx="53" cy="52" r="1.7" fill="#2a2420" />
+      <circle cx="67" cy="52" r="1.7" fill="#2a2420" />
+      <path
+        d="M53 60c2.6 3.2 11.4 3.2 14 0"
+        fill="none"
+        stroke="#a15a55"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+
+      <g transform="translate(78 124)">
+        <rect width="18" height="22" rx="2.2" fill="#f7f1e6" stroke="#d9cbb8" />
+        <rect x="5" y="-2.2" width="8" height="4.4" rx="1.2" fill="#d9cbb8" />
+        <path d="M4 8h10M4 12h10M4 16h7" stroke="#c56b7d" strokeWidth="1.2" strokeLinecap="round" />
       </g>
     </svg>
   );
