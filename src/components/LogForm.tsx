@@ -35,13 +35,15 @@ export function LogForm({ draft, saving, error, onChange, onSubmit, onCancel }: 
 
       <label className="field" htmlFor="log-date">
         Date
-        <input
-          id="log-date"
-          type="date"
-          value={draft.date}
-          onChange={(event) => onChange({ ...draft, date: event.target.value })}
-          required
-        />
+        <span className="control">
+          <input
+            id="log-date"
+            type="date"
+            value={draft.date}
+            onChange={(event) => onChange({ ...draft, date: event.target.value })}
+            required
+          />
+        </span>
       </label>
 
       <fieldset className="blocks">
@@ -50,26 +52,30 @@ export function LogForm({ draft, saving, error, onChange, onSubmit, onCancel }: 
           <div className="block-row" key={index}>
             <label htmlFor={`start-${index}`}>
               Start
-              <input
-                id={`start-${index}`}
-                type="time"
-                value={block.start}
-                onChange={(event) => updateBlock(index, "start", event.target.value)}
-                required
-              />
+              <span className="control">
+                <input
+                  id={`start-${index}`}
+                  type="time"
+                  value={block.start}
+                  onChange={(event) => updateBlock(index, "start", event.target.value)}
+                  required
+                />
+              </span>
             </label>
             <span className="to" aria-hidden="true">
               to
             </span>
             <label htmlFor={`end-${index}`}>
               End
-              <input
-                id={`end-${index}`}
-                type="time"
-                value={block.end}
-                onChange={(event) => updateBlock(index, "end", event.target.value)}
-                required
-              />
+              <span className="control">
+                <input
+                  id={`end-${index}`}
+                  type="time"
+                  value={block.end}
+                  onChange={(event) => updateBlock(index, "end", event.target.value)}
+                  required
+                />
+              </span>
             </label>
             {draft.blocks.length > 1 ? (
               <button
