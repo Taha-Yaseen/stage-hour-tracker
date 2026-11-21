@@ -3,18 +3,22 @@ import { Achievements } from "./components/Achievements";
 import { DayList } from "./components/DayList";
 import { LogForm } from "./components/LogForm";
 import { ProgressTrack } from "./components/ProgressTrack";
+import { WeekSchedule } from "./components/WeekSchedule";
 import { earnedAchievements, type Achievement } from "./lib/achievements";
 import {
   deleteDay,
   fetchDays,
+  fetchSchedule,
   loadErrorMessage,
   recordNewAchievements,
   saveDay,
   saveErrorMessage,
+  saveSchedule,
 } from "./lib/api";
-import { dayMinutes, emptyDraft, validateBlocks } from "./lib/hours";
+import { dayMinutes, emptyDraft, todayISO, validateBlocks } from "./lib/hours";
+import { finishForecast, scheduleProblem } from "./lib/schedule";
 import { isConfigured } from "./lib/supabase";
-import type { DayDraft, DayLog } from "./lib/types";
+import type { DayDraft, DayLog, ScheduleBlock } from "./lib/types";
 
 export function App() {
   const [days, setDays] = useState<DayLog[]>([]);
@@ -26,6 +30,11 @@ export function App() {
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
   const [celebration, setCelebration] = useState<Achievement[]>([]);
+  const [schedule, setSchedule] = useState<ScheduleBlock[]>([]);
+  const [savedScheduleKey, setSavedScheduleKey] = useState("[]");
+  const [scheduleSaving, setScheduleSaving] = useState(false);
+  const [scheduleError, setScheduleError] = useState<string | null>(null);
+  const [scheduleSaved, setScheduleSaved] = useState(false);
   const formRef = useRef<HTMLDivElement>(null);
   const celebrationRef = useRef<HTMLDivElement>(null);
 
@@ -37,6 +46,12 @@ export function App() {
     () => new Set(earnedAchievements(days).map((achievement) => achievement.key)),
     [days],
   );
+  const loggedDates = useMemo(() => new Set(days.map((day) => day.log_date)), [days]);
+  const forecast = useMemo(
+    () => finishForecast(minutes, schedule, todayISO(), loggedDates),
+    [minutes, schedule, loggedDates],
+  );
+  const scheduleDirty = JSON.stringify(schedule) !== savedScheduleKey;
 
   useEffect(() => {
     if (!isConfigured()) {
@@ -48,9 +63,11 @@ export function App() {
     let cancelled = false;
     async function load() {
       try {
-        const nextDays = await fetchDays();
+        const [nextDays, nextSchedule] = await Promise.all([fetchDays(), fetchSchedule()]);
         if (cancelled) return;
         setDays(nextDays);
+        setSchedule(nextSchedule);
+        setSavedScheduleKey(JSON.stringify(nextSchedule));
         const fresh = await recordNewAchievements(nextDays);
         if (cancelled) return;
         if (fresh.length > 0) setCelebration(fresh);
@@ -106,6 +123,34 @@ export function App() {
       setFormError(saveErrorMessage(error));
     } finally {
       setSaving(false);
+    }
+  }
+
+  function handleScheduleChange(next: ScheduleBlock[]) {
+    setSchedule(next);
+    setScheduleSaved(false);
+    setScheduleError(null);
+  }
+
+  async function handleSaveSchedule() {
+    const problem = scheduleProblem(schedule);
+    if (problem) {
+      setScheduleError(problem);
+      return;
+    }
+
+    setScheduleSaving(true);
+    setScheduleError(null);
+    try {
+      await saveSchedule(schedule);
+      const nextSchedule = await fetchSchedule();
+      setSchedule(nextSchedule);
+      setSavedScheduleKey(JSON.stringify(nextSchedule));
+      setScheduleSaved(true);
+    } catch (error) {
+      setScheduleError(saveErrorMessage(error));
+    } finally {
+      setScheduleSaving(false);
     }
   }
 
@@ -172,6 +217,19 @@ export function App() {
       ) : null}
 
       {loading ? <p className="hint page-hint">Loading your hours…</p> : <ProgressTrack minutes={minutes} />}
+
+      {loading ? null : (
+        <WeekSchedule
+          blocks={schedule}
+          forecast={forecast}
+          dirty={scheduleDirty}
+          saving={scheduleSaving}
+          saved={scheduleSaved}
+          error={scheduleError}
+          onChange={handleScheduleChange}
+          onSubmit={() => void handleSaveSchedule()}
+        />
+      )}
 
       <div ref={formRef}>
         <LogForm

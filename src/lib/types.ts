@@ -22,3 +22,9 @@ export type DayDraft = {
   note: string;
   blocks: BlockDraft[];
 };
+
+export type ScheduleBlock = {
+  weekday: number;
+  start: string;
+  end: string;
+};

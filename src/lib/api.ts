@@ -1,6 +1,6 @@
 import { earnedAchievements, type Achievement } from "./achievements";
 import { supabase } from "./supabase";
-import type { BlockDraft, DayDraft, DayLog, SessionBlock } from "./types";
+import type { BlockDraft, DayDraft, DayLog, ScheduleBlock, SessionBlock } from "./types";
 
 type SessionRow = {
   id: string;
@@ -64,6 +64,39 @@ export async function saveDay(draft: DayDraft): Promise<void> {
     target_date: draft.date,
     target_note: draft.note.trim(),
     blocks,
+  });
+
+  if (error) throw error;
+}
+
+type ScheduleRow = {
+  weekday: number;
+  starts_at: string;
+  ends_at: string;
+};
+
+export async function fetchSchedule(): Promise<ScheduleBlock[]> {
+  const { data, error } = await client()
+    .from("schedule_blocks")
+    .select("weekday, starts_at, ends_at")
+    .order("weekday", { ascending: true })
+    .order("starts_at", { ascending: true });
+
+  if (error) throw error;
+  return ((data ?? []) as ScheduleRow[]).map((row) => ({
+    weekday: row.weekday,
+    start: clock(row.starts_at),
+    end: clock(row.ends_at),
+  }));
+}
+
+export async function saveSchedule(blocks: ScheduleBlock[]): Promise<void> {
+  const { error } = await client().rpc("save_schedule", {
+    blocks: blocks.map((block) => ({
+      weekday: block.weekday,
+      start: block.start,
+      end: block.end,
+    })),
   });
 
   if (error) throw error;
